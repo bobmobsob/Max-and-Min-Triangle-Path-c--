@@ -1,0 +1,52 @@
+//extra 
+
+
+#include <iostream>
+#include <algorithm>
+#include <stdio.h>
+#include <assert.h>
+
+int main(int argc, char* argv[])
+{
+	int triangle[] =
+	{
+		3,
+		7,4,
+		2,4,6,
+		8,5,9,3
+	};
+
+	int triangle1[] =
+	{
+		3,
+		7,4,
+		2,4,6,
+		8,5,9,3,
+	};
+
+	const int size = sizeof(triangle) / sizeof(int);
+	const int size1 = sizeof(triangle1) / sizeof(int);
+
+	const int tn = static_cast<int>(sqrt(2.0 * size));
+	const int pn = static_cast<int>(sqrt(2.0 * size1));
+	assert(tn * (tn + 1) == 2 * size);
+	assert(pn * (pn + 1) == 2 * size1);
+
+	for (int n = tn - 1; n > 0; --n)
+		for (int k = (n * (n - 1)) / 2; k < (n * (n + 2)) / 2; ++k)
+		{
+			triangle[k] += std::max(triangle[k + n], triangle[k + n + 1]);
+		}
+	for (int m = pn - 1; m > 0; --m) 
+		for (int l = (m * (m - 1)) / 2; l < (m * (m + 2)) / 2; ++l)
+		{
+			triangle1[l] += std::min(triangle1[l + m], triangle1[l + m + 1]);
+		}
+
+	std::cout << "\nMaximum path total: " << triangle[0] << "\n\n";
+
+	std::cout << "\nMinimum path total: " << triangle1[0] << "\n\n";
+
+	system("pause");
+	return 0;
+}
